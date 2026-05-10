@@ -20,7 +20,7 @@ Author: Hagyoon Choi
 
 ### Phase 1: Lisp Frontend Foundation
 - [ ] Define the core language specification (S-expressions, primitives).
-- [ ] Implement the Lexer and Parser to construct the AST.
+- [x] Implement the Lexer and Parser to construct the AST.
 - [ ] Build the REPL environment for real-time hardware component definitions.
 
 ### Phase 2: Hardware Primitives & Macro System
