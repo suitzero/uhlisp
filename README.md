@@ -19,7 +19,7 @@ Author: Hagyoon Choi
 ## Planning & Roadmap
 
 ### Phase 1: Lisp Frontend Foundation
-- [ ] Define the core language specification (S-expressions, primitives).
+- [x] Define the core language specification (S-expressions, primitives).
 - [x] Implement the Lexer and Parser to construct the AST.
 - [ ] Build the REPL environment for real-time hardware component definitions.
 
