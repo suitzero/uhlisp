@@ -12,6 +12,7 @@ The internal representation (IR) in `uhlisp` is designed for building computatio
 ### Atoms
 - **Symbol**: Represents variables and identifiers.
 - **Number**: Numeric literals (integers, floats).
+- **String**: String literals.
 - **Boolean**: `true` and `false`.
 
 ### S-expressions (Lists)
@@ -37,6 +38,10 @@ class Symbol(ASTNode):
 @dataclass
 class Number(ASTNode):
     value: Union[int, float]
+
+@dataclass
+class String(ASTNode):
+    value: str
 
 @dataclass
 class Boolean(ASTNode):

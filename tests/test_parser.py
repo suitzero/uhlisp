@@ -1,7 +1,7 @@
 import unittest
 from src.frontend.lexer import tokenize, LexerError
 from src.frontend.parser import parse, ParserError, parse_all
-from src.frontend.ast import Symbol, Number, String, List
+from src.frontend.ast import Symbol, Number, String, Boolean, List
 
 class TestLexer(unittest.TestCase):
     def test_basic_tokens(self):
@@ -42,6 +42,15 @@ class TestParser(unittest.TestCase):
         tokens = ['"hello"']
         ast = parse(tokens)
         self.assertEqual(ast, String('hello'))
+
+    def test_parse_atom_boolean(self):
+        tokens = ['true']
+        ast = parse(tokens)
+        self.assertEqual(ast, Boolean(True))
+
+        tokens = ['false']
+        ast = parse(tokens)
+        self.assertEqual(ast, Boolean(False))
 
     def test_parse_list(self):
         tokens = ['(', '+', '1', '2', ')']

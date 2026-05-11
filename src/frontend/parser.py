@@ -1,5 +1,5 @@
 from typing import List as TList
-from src.frontend.ast import ASTNode, Symbol, Number, String, List
+from src.frontend.ast import ASTNode, Symbol, Number, String, Boolean, List
 
 class ParserError(Exception):
     pass
@@ -39,6 +39,11 @@ class Parser:
         return List(elements)
 
     def _parse_atom(self, token: str) -> ASTNode:
+        if token == 'true':
+            return Boolean(True)
+        elif token == 'false':
+            return Boolean(False)
+
         if token.startswith('"') and token.endswith('"'):
             return String(token[1:-1])
 
