@@ -1,0 +1,17 @@
+; Basic Optical Logic Primitives for uhlisp
+; These primitives form the foundation of optical circuits, representing hardware nodes.
+
+; A Splitter takes one input optical signal and splits it into two equal outputs.
+(define splitter
+  (lambda (in_signal)
+    (quote (node "splitter" in_signal))))
+
+; A Phase Shifter takes an input signal and shifts its phase by a specific amount (theta).
+(define phase-shifter
+  (lambda (in_signal theta)
+    (quote (node "phase-shifter" in_signal theta))))
+
+; A Combiner merges two optical signals into a single output.
+(define combiner
+  (lambda (in_signal1 in_signal2)
+    (quote (node "combiner" in_signal1 in_signal2))))
