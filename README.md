@@ -24,7 +24,7 @@ Author: Hagyoon Choi
 - [x] Build the REPL environment for real-time hardware component definitions.
 
 ### Phase 2: Hardware Primitives & Macro System
-- [ ] Define basic optical logic primitives (Splitters, Phase Shifters, Combiners) as foundational Lisp functions.
+- [x] Define basic optical logic primitives (Splitters, Phase Shifters, Combiners) as foundational Lisp functions.
 - [ ] Implement the Macro system (`defmacro`) to allow recursive hardware generation.
 - [ ] Construct the `defmodule` syntax for encapsulating optical circuit blocks.
 
