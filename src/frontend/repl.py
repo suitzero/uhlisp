@@ -2,10 +2,13 @@ import sys
 import traceback
 from src.frontend.lexer import tokenize, LexerError
 from src.frontend.parser import parse_all, ParserError
+from src.frontend.macro_expander import MacroExpander, MacroExpanderError
 
 def repl():
     print("Welcome to the uhlisp REPL.")
     print("Type 'exit' or 'quit' to exit, or press Ctrl+C / Ctrl+D.")
+
+    expander = MacroExpander()
 
     while True:
         try:
@@ -26,8 +29,11 @@ def repl():
 
             asts = parse_all(tokens)
 
+            # Macro Expand
+            expanded_asts = expander.expand_all(asts)
+
             # "Eval" (Print AST for now)
-            for ast in asts:
+            for ast in expanded_asts:
                 print(repr(ast))
 
         except (EOFError, KeyboardInterrupt):
@@ -37,6 +43,8 @@ def repl():
             print(f"LexerError: {e}")
         except ParserError as e:
             print(f"ParserError: {e}")
+        except MacroExpanderError as e:
+            print(f"MacroExpanderError: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
             traceback.print_exc()
