@@ -17,6 +17,7 @@ jobs:
         export PYTHONPATH=.
         python3 -m unittest tests/test_parser.py
         python3 -m unittest tests/test_macro.py
+        python3 -m unittest tests/test_defmodule.py
 
     - name: Run Integration Tests
       run: |
