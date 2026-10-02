@@ -12,12 +12,18 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Run Unit Tests
       run: |
         export PYTHONPATH=.
         python3 -m unittest tests/test_parser.py
         python3 -m unittest tests/test_macro.py
         python3 -m unittest tests/test_defmodule.py
+        python3 -m unittest tests/test_ir.py
 
     - name: Run Integration Tests
       run: |
