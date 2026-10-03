@@ -24,6 +24,7 @@ jobs:
         python3 -m unittest tests/test_macro.py
         python3 -m unittest tests/test_defmodule.py
         python3 -m unittest tests/test_ir.py
+        python3 -m unittest tests/test_compiler.py
 
     - name: Run Integration Tests
       run: |
