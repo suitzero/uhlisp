@@ -1,0 +1,66 @@
+(defmodule mac4x4 (x1 x2 x3 x4 y1 y2 y3 y4 x1-out x2-out x3-out x4-out y1-out y2-out y3-out y4-out t11 t12 t13 t14 t21 t22 t23 t24 t31 t32 t33 t34 t41 t42 t43 t44)
+  ; Cell 1,1
+  (splitter x1 mid1_1_1 x1_1)
+  (phase-shifter mid1_1_1 mid2_1_1 t11)
+  (combiner mid2_1_1 y1 y1_1)
+  ; Cell 1,2
+  (splitter x1_1 mid1_1_2 x1_2)
+  (phase-shifter mid1_1_2 mid2_1_2 t12)
+  (combiner mid2_1_2 y2 y1_2)
+  ; Cell 1,3
+  (splitter x1_2 mid1_1_3 x1_3)
+  (phase-shifter mid1_1_3 mid2_1_3 t13)
+  (combiner mid2_1_3 y3 y1_3)
+  ; Cell 1,4
+  (splitter x1_3 mid1_1_4 x1-out)
+  (phase-shifter mid1_1_4 mid2_1_4 t14)
+  (combiner mid2_1_4 y4 y1_4)
+  ; Cell 2,1
+  (splitter x2 mid1_2_1 x2_1)
+  (phase-shifter mid1_2_1 mid2_2_1 t21)
+  (combiner mid2_2_1 y1_1 y2_1)
+  ; Cell 2,2
+  (splitter x2_1 mid1_2_2 x2_2)
+  (phase-shifter mid1_2_2 mid2_2_2 t22)
+  (combiner mid2_2_2 y1_2 y2_2)
+  ; Cell 2,3
+  (splitter x2_2 mid1_2_3 x2_3)
+  (phase-shifter mid1_2_3 mid2_2_3 t23)
+  (combiner mid2_2_3 y1_3 y2_3)
+  ; Cell 2,4
+  (splitter x2_3 mid1_2_4 x2-out)
+  (phase-shifter mid1_2_4 mid2_2_4 t24)
+  (combiner mid2_2_4 y1_4 y2_4)
+  ; Cell 3,1
+  (splitter x3 mid1_3_1 x3_1)
+  (phase-shifter mid1_3_1 mid2_3_1 t31)
+  (combiner mid2_3_1 y2_1 y3_1)
+  ; Cell 3,2
+  (splitter x3_1 mid1_3_2 x3_2)
+  (phase-shifter mid1_3_2 mid2_3_2 t32)
+  (combiner mid2_3_2 y2_2 y3_2)
+  ; Cell 3,3
+  (splitter x3_2 mid1_3_3 x3_3)
+  (phase-shifter mid1_3_3 mid2_3_3 t33)
+  (combiner mid2_3_3 y2_3 y3_3)
+  ; Cell 3,4
+  (splitter x3_3 mid1_3_4 x3-out)
+  (phase-shifter mid1_3_4 mid2_3_4 t34)
+  (combiner mid2_3_4 y2_4 y3_4)
+  ; Cell 4,1
+  (splitter x4 mid1_4_1 x4_1)
+  (phase-shifter mid1_4_1 mid2_4_1 t41)
+  (combiner mid2_4_1 y3_1 y1-out)
+  ; Cell 4,2
+  (splitter x4_1 mid1_4_2 x4_2)
+  (phase-shifter mid1_4_2 mid2_4_2 t42)
+  (combiner mid2_4_2 y3_2 y2-out)
+  ; Cell 4,3
+  (splitter x4_2 mid1_4_3 x4_3)
+  (phase-shifter mid1_4_3 mid2_4_3 t43)
+  (combiner mid2_4_3 y3_3 y3-out)
+  ; Cell 4,4
+  (splitter x4_3 mid1_4_4 x4-out)
+  (phase-shifter mid1_4_4 mid2_4_4 t44)
+  (combiner mid2_4_4 y3_4 y4-out)
+)
