@@ -127,11 +127,16 @@ class MacroExpander:
             if len(args) != len(ports):
                 raise MacroError(f"Module '{module_name}' expects {len(ports)} arguments, got {len(args)}")
             
+            if not hasattr(self, 'inst_count'):
+                self.inst_count = 0
+            self.inst_count += 1
+            inst_suffix = f"_{module_name}_{self.inst_count}"
+            
             # Map ports to arguments
             bindings = {port: arg for port, arg in zip(ports, args)}
             
             # Substitute ports with arguments in all body elements
-            substituted_body = [self._substitute(elem, bindings) for elem in body_elements]
+            substituted_body = [self._substitute(elem, bindings, inst_suffix) for elem in body_elements]
             
             # Recursively expand the result, wrapped in a List
             # This turns the body elements into an S-expression sequence
@@ -142,14 +147,22 @@ class MacroExpander:
         expanded_elements = [self.expand(elem) for elem in ast.elements]
         return List(expanded_elements)
 
-    def _substitute(self, ast: ASTNode, bindings: Dict[str, ASTNode]) -> ASTNode:
+    def _substitute(self, ast: ASTNode, bindings: Dict[str, ASTNode], inst_suffix: str = "") -> ASTNode:
         """AST-to-AST parameter substitution."""
         if isinstance(ast, Symbol):
             if ast.name in bindings:
                 return copy.deepcopy(bindings[ast.name])
+            # If suffix is provided and it is an internal net/variable (not a known primitive/module)
+            if inst_suffix and ast.name not in self.modules and ast.name not in self.macros and ast.name not in ["splitter", "phase-shifter", "combiner", "+", "-", "*", "/"]:
+                return Symbol(ast.name + inst_suffix)
             return ast
         elif isinstance(ast, List):
-            substituted_elements = [self._substitute(elem, bindings) for elem in ast.elements]
-            return List(substituted_elements)
+            if not ast.elements:
+                return ast
+            head = ast.elements[0]
+            new_elements = [head]
+            for elem in ast.elements[1:]:
+                new_elements.append(self._substitute(elem, bindings, inst_suffix))
+            return List(new_elements)
         else:
             return ast

@@ -45,10 +45,10 @@ class TestDefmodule(unittest.TestCase):
         expanded = self.expander.expand(remaining[0])
         
         # Expected expansion:
-        # ( (splitter portA portB mid1 mid2) (combiner mid1 mid2 portC portD) )
+        # ( (splitter portA portB mid1_mzi_1 mid2_mzi_1) (combiner mid1_mzi_1 mid2_mzi_1 portC portD) )
         expected = List([
-            List([Symbol("splitter"), Symbol("portA"), Symbol("portB"), Symbol("mid1"), Symbol("mid2")]),
-            List([Symbol("combiner"), Symbol("mid1"), Symbol("mid2"), Symbol("portC"), Symbol("portD")])
+            List([Symbol("splitter"), Symbol("portA"), Symbol("portB"), Symbol("mid1_mzi_1"), Symbol("mid2_mzi_1")]),
+            List([Symbol("combiner"), Symbol("mid1_mzi_1"), Symbol("mid2_mzi_1"), Symbol("portC"), Symbol("portD")])
         ])
         
         self.assertEqual(expanded, expected)
@@ -74,16 +74,10 @@ class TestDefmodule(unittest.TestCase):
         expanded = self.expander.expand(remaining[0])
         
         # Expected expansion:
-        # (
-        #   ( (splitter start none mid1 mid2) )
-        #   ( (splitter mid1 none p1 p2) )
-        #   ( (splitter mid2 none p3 p4) )
-        # )
-        
         expected = List([
-            List([ List([Symbol("splitter"), Symbol("start"), Symbol("none"), Symbol("mid1"), Symbol("mid2")]) ]),
-            List([ List([Symbol("splitter"), Symbol("mid1"), Symbol("none"), Symbol("p1"), Symbol("p2")]) ]),
-            List([ List([Symbol("splitter"), Symbol("mid2"), Symbol("none"), Symbol("p3"), Symbol("p4")]) ])
+            List([ List([Symbol("splitter"), Symbol("start"), Symbol("none_simple-split_2"), Symbol("mid1_double-split_1"), Symbol("mid2_double-split_1")]) ]),
+            List([ List([Symbol("splitter"), Symbol("mid1_double-split_1"), Symbol("none_simple-split_3"), Symbol("p1"), Symbol("p2")]) ]),
+            List([ List([Symbol("splitter"), Symbol("mid2_double-split_1"), Symbol("none_simple-split_4"), Symbol("p3"), Symbol("p4")]) ])
         ])
         
         self.assertEqual(expanded, expected)
