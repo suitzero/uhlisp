@@ -108,6 +108,18 @@ def compile_netlist(module_name: str, ports: TList[str], body_elements: TList[Li
     return Netlist(components=components, connections=connections)
 
 
+def flatten_ast(node: List) -> TList[List]:
+    if not isinstance(node, List) or not node.elements:
+        return []
+    head = node.elements[0]
+    if not isinstance(head, List):
+        return [node]
+    flat = []
+    for elem in node.elements:
+        if isinstance(elem, List):
+            flat.extend(flatten_ast(elem))
+    return flat
+
 def compile_source(source: str) -> Netlist:
     tokens = tokenize(source)
     asts = parse_all(tokens)
@@ -118,11 +130,17 @@ def compile_source(source: str) -> Netlist:
     if not expander.modules:
         raise CompilerError("No defmodule found in source")
         
-    # Get the first module defined
-    module_name = list(expander.modules.keys())[0]
+    # Get the last module defined as the top-level module
+    module_name = list(expander.modules.keys())[-1]
     ports, body_elements = expander.modules[module_name]
     
-    # Expect body_elements to be AST Lists
-    filtered_body_elements = [elem for elem in body_elements if isinstance(elem, List)]
+    # Expand nested modules in body elements
+    expanded_body = [expander.expand(elem) for elem in body_elements]
     
-    return compile_netlist(module_name, ports, filtered_body_elements)
+    # Flatten the expanded ASTs to a simple list of primitives
+    flat_body = []
+    for elem in expanded_body:
+        if isinstance(elem, List):
+            flat_body.extend(flatten_ast(elem))
+    
+    return compile_netlist(module_name, ports, flat_body)
